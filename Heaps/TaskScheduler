@@ -1,0 +1,37 @@
+class Solution {
+    public int leastInterval(char[] tasks, int n) {
+        
+        int[] freq=new int[26];
+
+        //count freq
+        for(char task:tasks){
+            freq[task-'A']++;
+        }
+        //max heap
+         PriorityQueue<Integer> pq = new PriorityQueue<>(Collections.reverseOrder());
+        for(int f:freq){
+            if(f>0)pq.offer(f);//[3,3]
+         }  
+          int time=0;
+          while(pq.size()>0){
+          ArrayList<Integer>temp=new ArrayList<>();//fpr temporary storing
+
+          int cycle=n+1;//n cooldown+ 1 execution slot
+
+          while(cycle>0&&pq.size()>0 ){
+            int curr=pq.remove();
+            curr--;//[2,3]
+
+            if(curr>0)temp.add(curr);
+            time++;
+            cycle--;
+      }
+        for(int f: temp){
+            pq.add(f);}//for remaining freq
+
+            if(pq.size()>0)time=time+cycle;//if tasks are still left they are idle
+          }    
+
+        return time;
+     }
+}
