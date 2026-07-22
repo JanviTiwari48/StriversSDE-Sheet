@@ -1,0 +1,34 @@
+class Solution {
+    
+    
+    static class Pair{
+        int value;
+        int index;
+        
+       Pair(int value,int index){
+           this.value=value;
+           this.index=index;
+       } 
+    }
+    public void replaceWithRank(int[] arr) {
+        // code here
+        
+        PriorityQueue<Pair>pq=new PriorityQueue<>((a,b)->{
+            if(a.value!=b.value)return a.value-b.value;//smaller value first
+            return a.index-b.index;//earlier occurance first
+        });
+        
+        for(int i=0;i<arr.length;i++){
+            pq.add(new Pair(arr[i],i));
+        }
+        int rank=0;
+        
+        while(pq.size()>0){
+            Pair curr=pq.remove();
+            arr[curr.index]=rank;
+            rank++;
+        }
+        
+        
+    }
+}
